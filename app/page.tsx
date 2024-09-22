@@ -1,18 +1,20 @@
-import { useState } from "react";
-import Container from "./components/Container";
-import EmptyState from "./components/EmptyState";
-import getListings, { IListingParams } from "./actions/getListings";
-import ListingCard from "./components/listings/ListingCard";
-import { auth } from "@/auth";
+import { useState } from "react"
+import Container from "./components/Container"
+import EmptyState from "./components/EmptyState"
+import getListings, { IListingParams } from "./actions/getListings"
+import ListingCard from "./components/listings/ListingCard"
+import { auth } from "@/auth"
+import { currentUser } from "./actions/getCurrentUser"
 interface HomeProps {
-  searchParams: IListingParams;
+  searchParams: IListingParams
 }
 export default async function Home({ searchParams }: HomeProps) {
-  const listings = await getListings(searchParams);
-  const session = await auth();
-  const isEmpty = listings.length === 0;
+  const listings = await getListings(searchParams)
+  const session = await auth()
+  const user = await currentUser()
+  const isEmpty = listings.length === 0
   if (isEmpty) {
-    return <EmptyState showReset />;
+    return <EmptyState showReset />
   }
   return (
     <Container>
@@ -31,14 +33,10 @@ export default async function Home({ searchParams }: HomeProps) {
       >
         {listings.map((listing) => {
           return (
-            <ListingCard
-              currentUser={session?.user}
-              key={listing.id}
-              data={listing}
-            />
-          );
+            <ListingCard currentUser={user} key={listing.id} data={listing} />
+          )
         })}
       </div>
     </Container>
-  );
+  )
 }

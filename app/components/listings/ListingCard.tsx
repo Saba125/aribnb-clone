@@ -1,20 +1,20 @@
-"use client";
-import useCountries from "@/app/hooks/useCountries";
-import { Listing, Reservation, User } from "@prisma/client";
-import { useRouter } from "next/navigation";
-import { format } from "date-fns";
-import Image from "next/image";
-import HeartButton from "../HeartButton";
-import Button from "../button/Button";
-import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
+"use client"
+import useCountries from "@/app/hooks/useCountries"
+import { Listing, Reservation, User } from "@prisma/client"
+import { useRouter } from "next/navigation"
+import { format } from "date-fns"
+import Image from "next/image"
+import HeartButton from "../HeartButton"
+import Button from "../button/Button"
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types"
 interface ListingCardProps {
-  data: SafeListing;
-  reservation?: SafeReservation;
-  onAction?: (id: string) => void;
-  disabled?: boolean;
-  actionLabel?: string;
-  actionId?: string;
-  currentUser?: SafeUser | null;
+  data: Listing
+  reservation?: SafeReservation | null
+  onAction?: (id: string) => void
+  disabled?: boolean
+  actionLabel?: string
+  actionId?: string
+  currentUser?: SafeUser | null
 }
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
@@ -25,26 +25,26 @@ const ListingCard: React.FC<ListingCardProps> = ({
   onAction,
   reservation,
 }) => {
-  const router = useRouter();
-  const { getByValue } = useCountries();
-  const location = getByValue(data.locationValue);
+  const router = useRouter()
+  const { getByValue } = useCountries()
+  const location = getByValue(data.locationValue)
   const handleCancel = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    if (disabled) return;
-    onAction?.(actionId);
-  };
+    e.stopPropagation()
+    if (disabled) return
+    onAction?.(actionId)
+  }
   const price = () => {
     if (reservation) {
-      return reservation.totalPrice;
+      return reservation.totalPrice
     }
-    return data.price;
-  };
+    return data.price
+  }
   const reservationDate = () => {
-    if (!reservation) return null;
-    const start = new Date(reservation.startDate);
-    const end = new Date(reservation.endDate);
-    return `${format(start, "PP")} - ${format(end, "PP")}`;
-  };
+    if (!reservation) return null
+    const start = new Date(reservation.startDate)
+    const end = new Date(reservation.endDate)
+    return `${format(start, "PP")} - ${format(end, "PP")}`
+  }
   return (
     <div
       onClick={() => router.push(`/listings/${data.id}`)}
@@ -85,7 +85,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ListingCard;
+export default ListingCard
