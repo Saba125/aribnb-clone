@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 import { currentUser } from "../actions/getCurrentUser"
 import getFavoriteListings from "../actions/getFavoriteListings"
 import EmptyState from "../components/EmptyState"
@@ -45,7 +45,11 @@ const ListingPage = () => {
     )
   }
 
-  return <FavoritesClient listings={listings} currentUser={user} />
+  return (
+    <Suspense fallback={<div>Loading Favorites...</div>}>
+      <FavoritesClient listings={listings} currentUser={user} />
+    </Suspense>
+  )
 }
 
 export default ListingPage
