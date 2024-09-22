@@ -1,41 +1,42 @@
-import { User } from "@prisma/client";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import useLoginModal from "./useLoginModal";
-import React from "react";
-import toast from "react-hot-toast";
+import { User } from "@prisma/client"
+import axios from "axios"
+import { useRouter } from "next/navigation"
+import useLoginModal from "./useLoginModal"
+import React from "react"
+import toast from "react-hot-toast"
+import { SafeUser } from "../types"
 interface IUseFavorite {
-  listingId: string;
-  currentUser: User;
+  listingId: string
+  currentUser: SafeUser | null
 }
 export const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
-  const router = useRouter();
-  const loginModal = useLoginModal();
+  const router = useRouter()
+  const loginModal = useLoginModal()
   const hasFavorited = () => {
-    const list = currentUser.favoriteIds || [];
-    return list.includes(listingId);
-  };
+    const list = currentUser?.favoriteIds || []
+    return list.includes(listingId)
+  }
   const toggleFavorite = async (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+    e.stopPropagation()
     if (!currentUser) {
-      return loginModal.onOpen();
+      return loginModal.onOpen()
     }
     try {
-      let request;
+      let request
       if (hasFavorited()) {
-        request = () => axios.delete(`/api/favorites/${listingId}`);
+        request = () => axios.delete(`/api/favorites/${listingId}`)
       } else {
-        request = () => axios.post(`/api/favorites/${listingId}`);
+        request = () => axios.post(`/api/favorites/${listingId}`)
       }
-      await request();
-      router.refresh();
-      toast.success("Success");
+      await request()
+      router.refresh()
+      toast.success("Success")
     } catch (error) {
-      toast.error("Something wentt wrong.");
+      toast.error("Something wentt wrong.")
     }
-  };
+  }
   return {
     hasFavorited,
     toggleFavorite,
-  };
-};
+  }
+}

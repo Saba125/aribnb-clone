@@ -8,7 +8,7 @@ import HeartButton from "../HeartButton"
 import Button from "../button/Button"
 import { SafeListing, SafeReservation, SafeUser } from "@/app/types"
 interface ListingCardProps {
-  data: Listing
+  data: SafeListing
   reservation?: SafeReservation | null
   onAction?: (id: string) => void
   disabled?: boolean

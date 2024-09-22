@@ -10,7 +10,6 @@ interface HomeProps {
 }
 export default async function Home({ searchParams }: HomeProps) {
   const listings = await getListings(searchParams)
-  const session = await auth()
   const user = await currentUser()
   const isEmpty = listings.length === 0
   if (isEmpty) {

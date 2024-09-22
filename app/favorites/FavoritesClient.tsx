@@ -1,11 +1,11 @@
-import Container from "../components/Container";
-import Heading from "../components/Heading";
-import ListingCard from "../components/listings/ListingCard";
-import { SafeListing, SafeUser } from "../types";
+import Container from "../components/Container"
+import Heading from "../components/Heading"
+import ListingCard from "../components/listings/ListingCard"
+import { SafeListing, SafeUser } from "../types"
 
 interface FavoritesClientProps {
-  listings: SafeListing[];
-  currentUser?: SafeUser | null;
+  listings: SafeListing[]
+  currentUser?: SafeUser | null
 }
 const FavoritesClient: React.FC<FavoritesClientProps> = ({
   listings,
@@ -41,7 +41,7 @@ const FavoritesClient: React.FC<FavoritesClientProps> = ({
         </div>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default FavoritesClient;
+export default FavoritesClient
