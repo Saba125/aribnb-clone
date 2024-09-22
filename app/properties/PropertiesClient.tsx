@@ -1,36 +1,37 @@
-"use client";
-import { useRouter } from "next/navigation";
-import Container from "../components/Container";
-import Heading from "../components/Heading";
-import { SafeListing, SafeReservation, SafeUser } from "../types";
-import { useState } from "react";
-import axios from "axios";
-import toast from "react-hot-toast";
-import ListingCard from "../components/listings/ListingCard";
+"use client"
+import { useRouter } from "next/navigation"
+import Container from "../components/Container"
+import Heading from "../components/Heading"
+import { SafeListing, SafeReservation, SafeUser } from "../types"
+import { useState } from "react"
+import axios from "axios"
+import toast from "react-hot-toast"
+import ListingCard from "../components/listings/ListingCard"
+import { Listing } from "@prisma/client"
 
 interface PropertiesClientProps {
-  listings: SafeListing[];
-  currentUser?: SafeUser | null;
+  listings: Listing[]
+  currentUser?: SafeUser | null
 }
 const PropertiesClient: React.FC<PropertiesClientProps> = ({
   listings,
   currentUser,
 }) => {
-  const router = useRouter();
-  const [deletingId, setDeletingId] = useState("");
+  const router = useRouter()
+  const [deletingId, setDeletingId] = useState("")
   const onCancel = (id: string) => {
-    setDeletingId(id);
+    setDeletingId(id)
     axios
       .delete(`/api/listings/${id}`)
       .then((res) => {
-        toast.success("listing deleted");
-        router.refresh();
+        toast.success("listing deleted")
+        router.refresh()
       })
       .catch((res) => [toast.error("Something went wrong")])
       .finally(() => {
-        setDeletingId("");
-      });
-  };
+        setDeletingId("")
+      })
+  }
   return (
     <div className="mt-10">
       <Container>
@@ -53,7 +54,7 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
         </div>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default PropertiesClient;
+export default PropertiesClient
